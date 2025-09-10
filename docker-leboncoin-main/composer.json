@@ -1,0 +1,15 @@
+{
+    "name": "amounivongs/docker-leboncoin",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AnousoneM",
+            "email": "anousone.mounivongs@gmail.com"
+        }
+    ],
+    "require": {}
+}
