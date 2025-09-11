@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AnnonceController;
 use App\Controllers\HomeController;
 
 // si le param url est présent on prend sa valeur, sinon on donne la valeur home
@@ -16,6 +17,11 @@ switch($page){
         $objController = new HomeController();
         $objController->index();
         break;
+    case 'annonces':
+        $objController = new AnnonceController();
+        $objController->index();
+        break;
+
     default:
         // aucun cas reconnu = on charge la 404
         require_once __DIR__ . "/../src/Views/page404.php";
