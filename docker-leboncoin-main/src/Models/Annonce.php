@@ -1,17 +1,47 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Database;
 
-class Annonce {
+class Annonce
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = (new Database())->getConnection();
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         $query = $this->db->query("SELECT * FROM annonces ORDER BY a_publication DESC");
         return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function create($titre, $description, $prix, $image, $userId)
+    {
+        $sql = "INSERT INTO annonces (a_title, a_description, a_price, a_picture, u_id)
+            VALUES (:titre, :description, :prix, :image, :userId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':titre' => $titre,
+            ':description' => $description,
+            ':prix' => $prix,
+            ':image' => $image,
+            ':userId' => $userId
+        ]);
+    }
+
+    public function getById($id)
+    {
+        $sql = "SELECT a.*, u.u_username 
+            FROM annonces a
+            JOIN users u ON a.u_id = u.u_id
+            WHERE a.a_id = :id";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

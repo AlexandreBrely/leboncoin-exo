@@ -12,7 +12,7 @@ $arrayUrl = explode('/', $url);
 // je récupère la page demandée index 0
 $page = $arrayUrl[0];
 
-switch($page){
+switch ($page) {
     case 'home':
         $objController = new HomeController();
         $objController->index();
@@ -21,6 +21,20 @@ switch($page){
         $objController = new AnnonceController();
         $objController->index();
         break;
+    case 'create':
+        $objController = new AnnonceController();
+        $objController->create();
+        break;
+    case 'details':
+        if (isset($arrayUrl[1])) {
+            $id = $arrayUrl[1];
+            $objController = new AnnonceController();
+            $objController->show($id);
+        } else {
+            require_once __DIR__ . "/../src/Views/page404.php";
+        }
+        break;
+
 
     default:
         // aucun cas reconnu = on charge la 404
