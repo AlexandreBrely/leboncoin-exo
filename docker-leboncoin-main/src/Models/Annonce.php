@@ -44,4 +44,13 @@ class Annonce
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
+
+    
+    public function getByUser($userId)
+    {
+        $sql = "SELECT * FROM annonces WHERE u_id = :userId ORDER BY a_publication DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':userId' => $userId]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

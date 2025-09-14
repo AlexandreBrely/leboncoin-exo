@@ -3,3 +3,61 @@
     font-weight: 400;
     font-style: normal;
 }
+
+body {
+    background-color: #fdf6e3;
+    font-family: 'Coiny', cursive;
+    color: #2a2a2a;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Coiny', cursive;
+    color: #f4a261;
+}
+
+.navbar {
+    background-color: #a3c4f3;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    color: #2a2a2a !important;
+}
+
+.nav-link {
+    color: #2a2a2a !important;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #f4a261 !important;
+}
+
+.btn-warning {
+    background-color: #f4a261;
+    border: none;
+    color: #fff;
+}
+
+.btn-warning:hover {
+    background-color: #e76f51;
+}
+
+.card {
+    border: 1px solid #a3c4f3;
+    background-color: #ffffff;
+}
+
+.card-title {
+    color: #2a2a2a;
+    font-family: 'Coiny', cursive;
+}
+
+footer {
+    background-color: #a3c4f3;
+    color: #2a2a2a;
+    padding: 1rem;
+    text-align: center;
+}

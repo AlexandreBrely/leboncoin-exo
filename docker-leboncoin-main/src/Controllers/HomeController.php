@@ -2,9 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\Annonce;
+
 class HomeController {
     public function index(){
-        require_once __DIR__ . "/../Views/home.php";
+        $annonceModel = new Annonce();
+        $annonces = $annonceModel->getAll();
+
+        require_once __DIR__ . "/../Views/annonces.php";
     }
 }
 

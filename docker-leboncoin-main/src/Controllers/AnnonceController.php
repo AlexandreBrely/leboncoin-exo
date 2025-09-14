@@ -28,6 +28,14 @@ class AnnonceController
 
     public function create()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        };
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?url=login');
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $titre = $_POST['titre'];
             $description = $_POST['description'];

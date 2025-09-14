@@ -13,18 +13,22 @@ $arrayUrl = explode('/', $url);
 $page = $arrayUrl[0];
 
 switch ($page) {
+
     case 'home':
         $objController = new HomeController();
         $objController->index();
         break;
+
     case 'annonces':
         $objController = new AnnonceController();
         $objController->index();
         break;
+
     case 'create':
         $objController = new AnnonceController();
         $objController->create();
         break;
+
     case 'details':
         if (isset($arrayUrl[1])) {
             $id = $arrayUrl[1];
@@ -35,6 +39,35 @@ switch ($page) {
         }
         break;
 
+    case 'register':
+        $objController = new \App\Controllers\UserController();
+        $objController->register();
+        break;
+
+    case 'login':
+        $objController = new \App\Controllers\UserController();
+        $objController->login();
+        break;
+
+    case 'profil':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php?url=login');
+            exit;
+        }
+        $objController = new \App\Controllers\UserController();
+        $objController->profil();
+        break;
+
+    case 'logout':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        session_destroy();
+        require_once __DIR__ . '/../src/Views/logout.php';
+        exit;
 
     default:
         // aucun cas reconnu = on charge la 404
