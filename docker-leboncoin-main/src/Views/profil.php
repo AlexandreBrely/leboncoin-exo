@@ -20,6 +20,8 @@
                             <p class="card-text"><?= htmlspecialchars($annonce['a_price']) ?> €</p>
                             <a href="index.php?url=details/<?= $annonce['a_id'] ?>" class="btn btn-warning">Voir</a>
                         </div>
+                        <a href="index.php?url=edit-annonce&id=<?= $annonce['a_id'] ?>" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="index.php?url=delete-annonce&id=<?= $annonce['a_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette annonce ?')">Supprimer</a>
                     </div>
                 </div>
             <?php endforeach; ?>

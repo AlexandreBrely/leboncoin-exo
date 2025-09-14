@@ -29,6 +29,16 @@ switch ($page) {
         $objController->create();
         break;
 
+    case 'edit-annonce':
+        $objController = new \App\Controllers\AnnonceController();
+        $objController->edit($_GET['id']);
+        break;
+
+    case 'delete-annonce':
+        $objController = new \App\Controllers\AnnonceController();
+        $objController->delete($_GET['id']);
+        break;
+
     case 'details':
         if (isset($arrayUrl[1])) {
             $id = $arrayUrl[1];

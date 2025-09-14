@@ -44,14 +44,27 @@ class AnnonceController
 
             // Gestion de l'image
             if (!empty($_FILES['image']['name'])) {
-                $imageName = uniqid() . '_' . $_FILES['image']['name'];
-                $uploadPath = __DIR__ . '/../../public/uploads/' . $imageName;
-                move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath);
+                
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $tmpName = $_FILES['image']['tmp_name'];
+                    $originalName = basename($_FILES['image']['name']);
+                    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+
+                    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                    if (in_array(strtolower($extension), $allowed)) {
+                        $imageName = uniqid() . '_' . $originalName;
+                        $uploadPath = __DIR__ . '/../../public/uploads/' . $imageName;
+
+                        if (move_uploaded_file($tmpName, $uploadPath)) {
+                            $image = $imageName;
+                        }
+                    }
+                }
                 $image = $imageName;
             }
 
             // ID utilisateur fictif (à remplacer par session plus tard)
-            $userId = 1;
+            $userId = $_SESSION['user']['id'];
 
             $annonceModel = new \App\Models\Annonce();
             $annonceModel->create($titre, $description, $prix, $image, $userId);
@@ -61,5 +74,38 @@ class AnnonceController
         }
 
         require_once __DIR__ . '/../Views/create.php';
+    }
+    public function edit($id)
+    {
+        $annonceModel = new \App\Models\Annonce();
+        $annonce = $annonceModel->find($id);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            $price = $_POST['price'];
+            $image = isset($annonce['a_image']) ? $annonce['a_image'] : null;
+
+            if (!empty($_FILES['image']['name'])) {
+                $imageName = uniqid() . '_' . $_FILES['image']['name'];
+                $uploadPath = __DIR__ . '/../../public/uploads/' . $imageName;
+                move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath);
+                $image = $imageName;
+            }
+
+            $annonceModel->update($id, $title, $description, $price, $image);
+            header('Location: index.php?url=profil');
+            exit;
+        }
+
+        require_once __DIR__ . '/../Views/editAnnonce.php';
+    }
+    public function delete($id)
+    {
+        $annonceModel = new \App\Models\Annonce();
+        $annonceModel->delete($id);
+
+        header('Location: index.php?url=profil');
+        exit;
     }
 }
