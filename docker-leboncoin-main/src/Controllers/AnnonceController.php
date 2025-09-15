@@ -37,31 +37,35 @@ class AnnonceController
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            // var_dump($_FILES);
+            // exit;
+
+
             $titre = $_POST['titre'];
             $description = $_POST['description'];
             $prix = $_POST['prix'];
             $image = null;
 
             // Gestion de l'image
-            if (!empty($_FILES['image']['name'])) {
-                
-                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                    $tmpName = $_FILES['image']['tmp_name'];
-                    $originalName = basename($_FILES['image']['name']);
-                    $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $tmpName = $_FILES['image']['tmp_name'];
+                $originalName = basename($_FILES['image']['name']);
+                $extension = pathinfo($originalName, PATHINFO_EXTENSION);
 
-                    $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-                    if (in_array(strtolower($extension), $allowed)) {
-                        $imageName = uniqid() . '_' . $originalName;
-                        $uploadPath = __DIR__ . '/../../public/uploads/' . $imageName;
+                $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array(strtolower($extension), $allowed)) {
+                    $imageName = uniqid() . '_' . $originalName;
+                    $uploadPath = __DIR__ . '/../../public/uploads/' . $imageName;
 
-                        if (move_uploaded_file($tmpName, $uploadPath)) {
-                            $image = $imageName;
-                        }
+                    if (move_uploaded_file($tmpName, $uploadPath)) {
+                        $image = $imageName;
                     }
                 }
-                $image = $imageName;
             }
+
+            // var_dump($image);
+            // exit;
 
             // ID utilisateur fictif (à remplacer par session plus tard)
             $userId = $_SESSION['user']['id'];
