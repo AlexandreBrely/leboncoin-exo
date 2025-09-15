@@ -5,7 +5,7 @@
     <h2><?= htmlspecialchars($annonce['a_title']) ?></h2>
     <div class="row">
         <div class="col-md-6">
-            <img src="public/uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="img-fluid" alt="Image annonce">
+            <img src="uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="img-fluid" alt="Image annonce">
         </div>
         <div class="col-md-6">
             <p><strong>Prix :</strong> <?= htmlspecialchars($annonce['a_price']) ?> €</p>
