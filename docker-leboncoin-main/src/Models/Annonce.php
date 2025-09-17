@@ -18,6 +18,7 @@ class Annonce
         $query = $this->db->query("SELECT * FROM annonces ORDER BY a_publication DESC");
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
+    
 
     public function create($titre, $description, $prix, $image, $userId)
     {
@@ -30,6 +31,7 @@ class Annonce
             ':prix' => $prix,
             ':image' => $image,
             ':userId' => $userId
+
         ]);
     }
 

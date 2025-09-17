@@ -14,7 +14,7 @@
             <?php foreach ($annonces as $annonce): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="public/uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="card-img-top" alt="Image annonce">
+                        <img src="uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="card-img-top" alt="Image annonce">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($annonce['a_title']) ?></h5>
                             <p class="card-text"><?= htmlspecialchars($annonce['a_price']) ?> €</p>

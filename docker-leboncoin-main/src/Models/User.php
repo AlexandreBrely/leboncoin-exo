@@ -6,11 +6,14 @@ use App\Models\Database;
 
 class User
 {
-    private static $db;
+    private $db;
 
     public function __construct()
     {
-        $this->db = new Database()->getConnection();
+       // Compatibilité maximale : évite la syntaxe (new Database())->getConnection()
+        $database = new Database();
+        $this->db = $database->getConnection();
+
     }
 
     public function create($username, $email, $password)
@@ -23,6 +26,7 @@ class User
             ':email' => $email,
             ':password' => $password
         ]);
+        return true;
     }
     public function findByEmail($email)
     {
@@ -33,18 +37,16 @@ class User
     }
 
     public static function checkMail(string $email): bool
-
     {
-
         try {
+            // pour utiliser la DB ici (méthode statique), obtenir une connexion temporaire
+            $db = (new Database())->getConnection();
             // Requête qui teste si un email existe déjà.
             // SELECT 1 → on ne demande qu’un "1" (pas besoin des infos de l’utilisateur).
             // LIMIT 1 → on arrête la recherche dès le premier résultat trouvé.
             $sql = 'SELECT 1 FROM `users` WHERE `u_email` = :email LIMIT 1';
-
             // On prépare la requête avant de l'exécuter
-            $stmt = self::$db->prepare($sql);
-
+            $stmt = $db->prepare($sql);
             // On associe le paramètre nommé :email avec la valeur contenue dans $email,
             // en précisant qu’il s’agit d’une chaîne (db::PARAM_STR).
             // Cela permet à db de traiter correctement la valeur et d’éviter toute injection SQL.
@@ -52,12 +54,10 @@ class User
 
             // On exécute la requête
             $stmt->execute();
-
             // Récupère la première colonne du premier résultat de la requête.
             // Ici, comme la requête fait "SELECT 1", on obtiendra soit 1 si l’email existe,
             // soit false si aucun résultat n’est trouvé.
             $result = $stmt->fetchColumn();
-
             if ($result !== false) {
                 // une ligne a été trouvée -> l'email existe déjà
                 return true;
@@ -81,15 +81,15 @@ class User
     {
         try {
             // Création d'une instance de connexion à la base de données
-          
-
+            // pour utiliser la DB ici (méthode statique), obtenir une connexion temporaire
+            $db = (new Database())->getConnection();
             // Requête qui teste si un username existe déjà.
             // SELECT 1 → on ne demande qu’un "1" (pas besoin des infos de l’utilisateur).
             // LIMIT 1 → on arrête la recherche dès le premier résultat trouvé.
             $sql = 'SELECT 1 FROM `users` WHERE `u_username` = :username LIMIT 1';
 
             // On prépare la requête avant de l'exécuter
-            $stmt = self::$db->prepare($sql);
+            $stmt = $db->prepare($sql);
 
             // On associe le paramètre nommé :username avec la valeur contenue dans $username,
             // en précisant qu’il s’agit d’une chaîne (db::PARAM_STR).

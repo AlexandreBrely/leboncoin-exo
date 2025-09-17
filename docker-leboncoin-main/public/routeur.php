@@ -60,9 +60,9 @@ switch ($page) {
         break;
 
     case 'profil':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
         if (!isset($_SESSION['user'])) {
             header('Location: index.php?url=login');
             exit;
@@ -72,10 +72,10 @@ switch ($page) {
         break;
 
     case 'logout':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        session_destroy();
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
+        // session_destroy();
         require_once __DIR__ . '/../src/Views/logout.php';
         exit;
 
