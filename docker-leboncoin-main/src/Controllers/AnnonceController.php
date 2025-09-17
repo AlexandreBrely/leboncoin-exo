@@ -83,7 +83,7 @@ class AnnonceController
 
             // Si une nouvelle image est envoyée, on la remplace
             if (!empty($_FILES['image']['name'])) {
-                $image = $this->handleImageUpload($_FILES['image'], $errors, $annonce['a_image']);
+                $image = $this->handleImageUpload($_FILES['image'], $errors, $annonce['a_picture']);
             }
 
             if (empty($errors)) {
