@@ -47,7 +47,6 @@ class Annonce
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-
     public function getByUser($userId)
     {
         $sql = "SELECT * FROM annonces WHERE u_id = :userId ORDER BY a_publication DESC";
