@@ -222,11 +222,30 @@ class Annonce
      * - Pense à vérifier côté contrôleur que l'utilisateur a le droit de supprimer l'annonce
      *   avant d'appeler cette méthode (contrôle d'autorisation).
      */
-    public function delete($id): bool
+    public function delete($id, $userId): bool
     {
         try {
-            $stmt = $this->db->prepare("DELETE FROM annonces WHERE a_id = :id");
-            return (bool) $stmt->execute([':id' => $id]);
+            // Récupère l'image associée à l'annonce
+            $stmt = $this->db->prepare("SELECT a_picture FROM annonces WHERE a_id = :id AND u_id = :userId");
+            $stmt->execute([':id' => $id, ':userId' => $userId]);
+            $annonce = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Si l'annonce n'existe pas ou n'appartient pas à l'utilisateur
+            if (!$annonce) {
+                return false;
+            }
+            //supression de l'annonce
+            $stmt = $this->db->prepare("DELETE FROM annonces WHERE a_id = :id AND u_id = :userId");
+            return (bool) $stmt->execute([':id' => $id, ':userId' => $userId]);
+            // Si suppression réussie et image présente, on supprime le fichier
+            if ($success && !empty($annonce['a_picture'])) {
+                $imagePath = __DIR__ . '/../../public/uploads/' . $annonce['a_picture'];
+
+                if (file_exists($imagePath) && is_file($imagePath)) {
+                    @unlink($imagePath); // suppression silencieuse
+                }
+            }
+            return $success;
         } catch (PDOException $e) {
             // En prod, loguer l'erreur et renvoyer false
             return false;

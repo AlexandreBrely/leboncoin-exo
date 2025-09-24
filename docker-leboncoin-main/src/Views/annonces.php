@@ -9,19 +9,21 @@
         <a href="index.php?url=create" class="btn btn-warning btn-lg">Déposer une annonce</a>
     </div>
 
-    <h2 class="mb-4">Toutes les annonces</h2>
+    <h2 class="my-4 text-center">Toutes les annonces</h2>
     <?php if (empty($annonces)): ?>
         <p class="text-center">Aucune annonce disponible pour le moment.</p>
     <?php else: ?>
 
-        <div class="row">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <?php foreach ($annonces as $annonce): ?>
-                
-                <div class="col-md-4">
-                    <div class="card card-image h-100">
-                        <img src="/uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="card-img-top" alt="Image annonce">
-                        <div class="card-body">
+
+                <div class="col-md-3">
+                    <div class="card h-100 d-flex flex-column">
+                        <div class="card-header text-center">
                             <h5 class="card-title"><?= htmlspecialchars($annonce['a_title']) ?></h5>
+                        </div>
+                        <img src="/uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="card-img-top" alt="Image annonce">
+                        <div class="card-body d-flex flex-column text-center">
                             <p class="card-text"><?= htmlspecialchars($annonce['a_price']) ?> €</p>
                             <a href="index.php?url=details/<?= $annonce['a_id'] ?>" class="btn btn-warning">Voir l'annonce</a>
                         </div>

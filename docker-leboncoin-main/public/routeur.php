@@ -3,6 +3,7 @@
 // Importation des contrôleurs nécessaires
 use App\Controllers\AnnonceController;
 use App\Controllers\HomeController;
+use App\Controllers\UserController;
 
 //  Récupération de l'URL demandée via le paramètre GET 'url'
 // Si aucun paramètre n'est fourni, on redirige vers la page d'accueil par défaut
@@ -13,6 +14,8 @@ $arrayUrl = explode('/', $url);
 
 //  La première partie de l'URL détermine la page ou l'action à exécuter
 $page = $arrayUrl[0];
+
+$id = $arrayUrl[1] ?? null;
 
 //  Routeur principal : chaque 'case' correspond à une route de l'application
 switch ($page) {
@@ -44,7 +47,7 @@ switch ($page) {
     //  Suppression d'une annonce
     case 'delete-annonce':
         $objController = new AnnonceController();
-        $objController->delete($_GET['id']); // Supprime l'annonce via son ID
+        $objController->delete($id, $_SESSION['user']['id']); // Supprime l'annonce via son ID
         break;
 
     //  Détail d'une annonce spécifique

@@ -102,9 +102,9 @@ class AnnonceController
     }
 
     // Supprime une annonce
-    public function delete($id)
+    public function delete($id, $userId)
     {
-        $this->annonceModel->delete($id);
+        $this->annonceModel->delete($id, $userId);
         header('Location: index.php?url=profil');
         exit;
     }
