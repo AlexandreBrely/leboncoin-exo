@@ -14,8 +14,8 @@
             <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="prix" class="form-label">Prix (€)</label>
-            <input type="number" class="form-control" id="prix" name="prix" required>
+            <label for="price" class="form-label">prix (€)</label>
+            <input type="number" class="form-control" id="price" name="price" required>
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>

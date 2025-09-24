@@ -61,10 +61,10 @@ class Annonce
     {
         // Requête préparée pour éviter injections et accepter différents types d'id
         $sql = "
-            SELECT a.*, u.u_username
-            FROM annonces a
-            JOIN users u ON a.u_id = u.u_id
-            WHERE a.a_id = :id
+            SELECT annonces.*, users.u_username
+            FROM annonces 
+            JOIN users ON annonces.u_id = users.u_id
+            WHERE annonces.a_id = :id
         ";
 
         $stmt = $this->db->prepare($sql);

@@ -16,8 +16,9 @@
 
         <div class="row">
             <?php foreach ($annonces as $annonce): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
+                
+                <div class="col-md-4">
+                    <div class="card card-image h-100">
                         <img src="/uploads/<?= htmlspecialchars($annonce['a_picture']) ?>" class="card-img-top" alt="Image annonce">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($annonce['a_title']) ?></h5>

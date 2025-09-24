@@ -42,10 +42,10 @@ class AnnonceController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $titre = $_POST['titre'] ?? '';
             $description = $_POST['description'] ?? '';
-            $prixRaw = $_POST['prix'] ?? ''; // <- valeur brute du formulaire
+            $prixRaw = $_POST['price'] ?? ''; // <- valeur brute du formulaire
             $result = $this->validateFields($titre, $description, $prixRaw);
             $errors = $result['errors'];
-            $prixFloat = $result['prix'];
+            $prixFloat = $result['price'];
             $image = null;
 
             // Si une image est envoyée, on la traite
@@ -62,9 +62,8 @@ class AnnonceController
             }
 
             // En cas d'erreur, on renvoie les données à la vue
-            extract(['errors' => $errors, 'old' => compact('titre', 'description', 'prix')]);
+            extract(['errors' => $errors, 'old' => compact('titre', 'description', 'price')]);
         }
-
         require_once __DIR__ . '/../Views/create.php';
     }
 
@@ -76,10 +75,10 @@ class AnnonceController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = $_POST['title'] ?? '';
             $description = $_POST['description'] ?? '';
-            $prixRaw = $_POST['prix'] ?? '';
+            $prixRaw = $_POST['price'] ?? '';
             $result = $this->validateFields($title, $description, $prixRaw);
             $errors = $result['errors'];
-            $image = $annonce['a_image']; // On garde l'image actuelle par défaut
+            $image = $annonce['a_picture']; // On garde l'image actuelle par défaut
 
             // Si une nouvelle image est envoyée, on la remplace
             if (!empty($_FILES['image']['name'])) {
@@ -142,16 +141,16 @@ class AnnonceController
 
         // Vérifier présence et format numérique, autoriser 0
         if ($priceSanitized === '') {
-            $errors['prix'] = 'Le prix est obligatoire.';
+            $errors['price'] = 'Le prix est obligatoire.';
             $prixFloat = null;
         } elseif (!is_numeric($priceSanitized) || (float)$priceSanitized < 0) {
-            $errors['prix'] = 'Le prix doit être un nombre positif ou zéro.';
+            $errors['price'] = 'Le prix doit être un nombre positif ou zéro.';
             $prixFloat = null;
         } else {
             $prixFloat = (float) $priceSanitized;
         }
 
-        return ['errors' => $errors, 'prix' => $prixFloat];
+        return ['errors' => $errors, 'price' => $prixFloat];
     }
 
     // Gère l'upload d'une image avec vérifications
