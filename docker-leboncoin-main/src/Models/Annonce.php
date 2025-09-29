@@ -212,21 +212,21 @@ class Annonce
         }
     }
 
-    /**
-     * Supprime une annonce par son ID.
-     *
-     * Retour :
-     * - bool : true si suppression OK, false sinon
-     *
-     * Note sécurité :
-     * - Pense à vérifier côté contrôleur que l'utilisateur a le droit de supprimer l'annonce
-     *   avant d'appeler cette méthode (contrôle d'autorisation).
-     */
+    
+    //   Supprime une annonce par son ID.
+     
+    //  Retour :
+    //  * - bool : true si suppression OK, false sinon
+    //  *
+    //  * Note sécurité :
+    //  * - Pense à vérifier côté contrôleur que l'utilisateur a le droit de supprimer l'annonce
+    //  *   avant d'appeler cette méthode (contrôle d'autorisation).
+    //  */
     public function delete($id, $userId): bool
     {
         try {
             // Récupère l'image associée à l'annonce
-            $stmt = $this->db->prepare("SELECT a_picture FROM annonces WHERE a_id = :id AND u_id = :userId");
+            $stmt = $this->db->prepare(" SELECT a_picture FROM annonces WHERE a_id = :id AND u_id = :userId ");
             $stmt->execute([':id' => $id, ':userId' => $userId]);
             $annonce = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -235,8 +235,8 @@ class Annonce
                 return false;
             }
             //supression de l'annonce
-            $stmt = $this->db->prepare("DELETE FROM annonces WHERE a_id = :id AND u_id = :userId");
-            return (bool) $stmt->execute([':id' => $id, ':userId' => $userId]);
+            $stmt = $this->db->prepare(" DELETE FROM annonces WHERE a_id = :id AND u_id = :userId" );
+            $success = (bool) $stmt->execute([':id' => $id, ':userId' => $userId]);
             // Si suppression réussie et image présente, on supprime le fichier
             if ($success && !empty($annonce['a_picture'])) {
                 $imagePath = __DIR__ . '/../../public/uploads/' . $annonce['a_picture'];
@@ -251,4 +251,5 @@ class Annonce
             return false;
         }
     }
+
 }

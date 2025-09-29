@@ -20,8 +20,18 @@
                             <p class="card-text"><?= htmlspecialchars($annonce['a_price']) ?> €</p>
                             <a href="index.php?url=details/<?= $annonce['a_id'] ?>" class="btn btn-warning">Voir</a>
                         </div>
-                        <a href="index.php?url=edit-annonce&id=<?= $annonce['a_id'] ?>" class="btn btn-warning btn-sm">Modifier</a>
-                        <a href="index.php?url=delete-annonce&id=<?= $annonce['a_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette annonce ?')">Supprimer</a>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="index.php?url=edit-annonce&id=<?= $annonce['a_id'] ?>" class="btn btn-warning btn-sm">Modifier</a>
+                            <form action="index.php?url=delete-annonce/<?= $annonce['a_id'] ?>"
+                                method="POST"
+                                class="m-0 p-0"
+                                onsubmit="return confirm('Supprimer cette annonce ?')">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Supprimer
+                                </button>
+                            </form>
+
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
