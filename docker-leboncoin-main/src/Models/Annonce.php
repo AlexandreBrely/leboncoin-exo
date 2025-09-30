@@ -31,6 +31,7 @@ class Annonce
         // Récupère la connexion PDO depuis la classe Database
         // Database::getConnection() doit renvoyer un objet PDO déjà configuré
         $this->db = (new Database())->getConnection();
+        
     }
 
     /**
